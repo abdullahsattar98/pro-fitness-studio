@@ -126,7 +126,7 @@ function state(S) {
   const openToday = S.days.includes(day);
   const nextOpenDay = d => { for (let k = 1; k <= 7; k++) { const n = (d + k) % 7; if (S.days.includes(n)) return { n, k }; } return null; };
   const first = bl[0], last = bl[bl.length - 1];
-  const kindWord = b => b.kind === 'ladies' ? 'Ladies time' : 'Co-ed time';
+  const kindWord = b => b.kind === 'ladies' ? 'Ladies time' : "Men's time";
   let cur = -1, next = -1, head, sub, open = false;
   if (openToday) {
     cur = bl.findIndex(b => min >= b.a && min < b.z);
@@ -135,11 +135,11 @@ function state(S) {
   if (cur > -1) {
     const b = bl[cur]; open = true;
     head = b.kind === 'ladies' ? 'Ladies time now' : 'Open now';
-    sub = b.kind === 'ladies' ? `Women only until ${PF.t12(b.z)}` : `Men and women until ${PF.t12(b.z)}`;
+    sub = b.kind === 'ladies' ? `Women only until ${PF.t12(b.z)}` : `Men only until ${PF.t12(b.z)}`;
   } else if (openToday && next > -1) {
     const b = bl[next];
     head = next === 0 ? `Opens at ${PF.t12(b.a)}` : 'Closed now';
-    sub = next === 0 ? `Ladies first, co-ed from ${PF.t12(last.a)}` : `${kindWord(b)} starts at ${PF.t12(b.a)}`;
+    sub = next === 0 ? `Ladies first, men from ${PF.t12(last.a)}` : `${kindWord(b)} starts at ${PF.t12(b.a)}`;
   } else {
     const nd = nextOpenDay(day);
     head = openToday ? 'Closed for today' : 'Closed today';
